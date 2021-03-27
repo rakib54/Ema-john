@@ -47,6 +47,7 @@ function Login() {
         photo :photoURL
       }
       setUser(signInUser)
+      setLoggedInUser(signInUser)
     })
     .catch(err =>{
       console.log(err);
