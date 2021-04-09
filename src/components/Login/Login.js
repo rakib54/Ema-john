@@ -48,11 +48,23 @@ function Login() {
       }
       setUser(signInUser)
       setLoggedInUser(signInUser)
+      setUserToken()
+      return signInUser
+     
     })
     .catch(err =>{
       console.log(err);
     })
   }
+   const setUserToken = () =>{
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    .then(function(idToken) {
+      sessionStorage.setItem('token',idToken)
+    }).catch(function(error) {
+      // Handle error
+    });
+   }
+
   const handleSignOut = () =>{
     firebase.auth().signOut()
     .then(res=>{

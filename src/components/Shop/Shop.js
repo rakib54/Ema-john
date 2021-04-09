@@ -10,12 +10,13 @@ const Shop = () => {
     // const first10 = fakeData.slice(0,10)
     const[products , setProduct] = useState([])
     const[cart , setCart] = useState([])
+    const [search, setSearch] =useState('')
 
     useEffect(() =>{
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/products?search='+search)
         .then(res =>res.json())
         .then(data =>setProduct(data))
-    },[])
+    },[search])
 
     useEffect(()=>{
         const saveCart = getDatabaseCart()
@@ -54,9 +55,14 @@ const Shop = () => {
         addToDatabaseCart(product.key,count);
     }
 
+    const handleSearch = (event) =>{
+        setSearch(event.target.value)
+    }
+
     return (
         <div className ="shop-container">
             <div className="product-container">
+                <input type="text" onBlur={handleSearch} className="search-box"/>
                 {
                     products.map(pd => <Product
                         key={pd.key} 
